@@ -21,10 +21,10 @@ def initialize_clusterer():
         intersection_factor=0.1,
         minimum_weight=3)
 
-    print('clusterer initialized - clusterer componenet')
+    print('clusterer initialized - detector componenet')
 
 
-@app.route('/clusterer/learn', methods=['GET'])
+@app.route('/detector/learn', methods=['GET'])
 def clusterer_learn():
     if (clusterer == None):
         initialize_clusterer()
@@ -33,7 +33,6 @@ def clusterer_learn():
     _x = content['x']
 
     x = {k: v for i, (k, v) in enumerate(_x.items())}
-    print(x)
     dbstream = clusterer
 
     dbstream.learn_one(x)
@@ -52,4 +51,4 @@ def clusterer_learn():
 
 
 if __name__ == '__main__':
-    app.run(port=5002, debug=True)
+    app.run(port=5000, debug=True)

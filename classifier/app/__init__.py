@@ -39,17 +39,10 @@ def clusterer_learn():
     dbstream.learn_one(x)
     dbstream._recluster()
 
-    y_pred = dbstream.predict_one(x) + 1
-    n_clusters = dbstream.n_clusters
-
-    print(x)
-    print(y_pred)
-    print(n_clusters)
-
     return jsonify({'x': x,
-                    'y': y_pred,
-                    'n_clusters': n_clusters})
+                    'y': dbstream.predict_one(x) + 1,
+                    'n_clusters': dbstream.n_clusters})
 
 
 if __name__ == '__main__':
-    app.run(port=5002, debug=True)
+    app.run(port=5001, debug=True)
