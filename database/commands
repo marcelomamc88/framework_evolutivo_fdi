@@ -1,0 +1,9 @@
+instalar:
+    mongodb 5.0.4 for windows (msi)
+    pip install pymongo
+criar:
+    database:
+        fdi
+    collection in database fdi:
+        unknown
+        clusterer_metadata
