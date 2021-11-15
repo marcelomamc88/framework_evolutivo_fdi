@@ -1,9 +1,5 @@
-import requests
 from flask import Flask, request, jsonify, render_template
 from river import cluster
-from river import stream
-import asyncio
-from threading import Thread
 from pymongo import MongoClient
 import numpy as np
 from matplotlib import cm
@@ -15,6 +11,8 @@ from mpl_toolkits.mplot3d import Axes3D
 import io
 import base64
 import datetime
+from scipy.spatial import distance
+import math
 
 # X = [[1, 0.5], [1, 0.625], [1, 0.75], [1, 1.125], [1, 1.5], [1, 1.75], [4, 1.5], [4, 2.25], [4, 2.5], [4, 3],[4, 3.25], [4, 3.5]]
 
@@ -55,7 +53,7 @@ def endpoint_learn():
 
     c = learn(x)
 
-    y_pred = c.predict_one(x) + 1
+    y_pred = c.predict_one(x)
 
     unknown_collection.insert_one({
         "timestamp": datetime.datetime.now(),
@@ -78,9 +76,15 @@ def endpoint_show():
     ax.set_ylabel('dim2')
     ax.set_zlabel('dim3')
 
-    ax.scatter( list(map(lambda x: x['sensors']['0'], unknowns)),
-                list(map(lambda x: x['sensors']['1'], unknowns)),
-                list(map(lambda x: x['sensors']['2'], unknowns)),
+    samples = list(map(lambda x: [x['sensors']['0'], x['sensors']['1'],x['sensors']['2']], unknowns))
+
+    dim_x = list(map(lambda x: x['sensors']['0'], unknowns))
+    dim_y = list(map(lambda x: x['sensors']['1'], unknowns))
+    dim_z = list(map(lambda x: x['sensors']['2'], unknowns))
+
+    ax.scatter( dim_x,
+                dim_z,
+                dim_y,
                 c=list(map(lambda x: color[x['cluster']], unknowns)),
                 marker='.')
 
@@ -90,6 +94,11 @@ def endpoint_show():
                 c='blue',
                 marker='*')
 
+    centers = [[centers['0'] for i, (k, centers) in enumerate(model.centers.items())],
+               [centers['1'] for i, (k, centers) in enumerate(model.centers.items())],
+               [centers['2'] for i, (k, centers) in enumerate(model.centers.items())]
+            ]
+
     # Convert plot to PNG image
     pngImage = io.BytesIO()
     FigureCanvas(fig).print_png(pngImage)
@@ -98,12 +107,56 @@ def endpoint_show():
     pngImageB64String = "data:image/png;base64,"
     pngImageB64String += base64.b64encode(pngImage.getvalue()).decode('utf8')
 
-    return render_template("clusters.html", image=pngImageB64String)
+    return render_template("clusters.html",
+                           samples=samples,
+                           centers=np.transpose(centers).tolist(),
+                           y_pred=list(map(lambda x: x['cluster'], unknowns)),
+                           min=[np.amin(dim_x), np.amin(dim_y), np.amin(dim_z)],
+                           max=[np.amax(dim_x),np.amax(dim_y),np.amax(dim_z)],
+                           colors=list(map(lambda x: cm.colors.to_hex(color[x['cluster']]), unknowns)),
+                           image=pngImageB64String
+                        )
 
+
+@app.route('/clusterer/known', methods=['GET'])
+def endpoint_known():
+    slice_factor = 0.2
+
+    # parameters
+    cluster = request.get_json()['cluster']
+    _class = request.get_json()['class']
+
+    #distancies calculate - select closest point to center => most relevant
+    cluster_samples = list(map(lambda x: [x['sensors']['0'], x['sensors']['1'], x['sensors']['2']], list(unknown_collection.find({'cluster': cluster}))))
+    cluster_center = [center for i, (k, center) in enumerate(model.centers[cluster].items())]
+
+    distances = []
+
+    for sample in cluster_samples:
+        distances.append(distance.euclidean(cluster_center, sample))
+
+    distances_unsorted = distances.copy()
+    distances.sort()
+
+    qty_distances_retrieve = math.ceil(len(distances) * slice_factor)
+    distances_retrieve = distances[: qty_distances_retrieve]
+
+    closest_samples_keys = [idx for idx, element in enumerate(distances_unsorted) if element in distances_retrieve]
+
+    x = [cluster_samples[k] for k in closest_samples_keys]
+
+    #registries remove from unknown collection
+    unknown_collection.delete_many({"cluster": cluster})
+
+    #retrain
+    restart_model()
+
+    #call /classifier/learn/x/y
+    print('known samples... train classifier with x, y')
 
 def initialize():
     start_database()
-    start_model()
+    restart_model()
 
     print('clusterer component has been initialized...')
 
@@ -117,7 +170,7 @@ def start_database():
     clusterer_metadata_collection = fdi_db.clusterer_metadata
 
 
-def start_model():
+def restart_model():
     global model
 
     model = cluster.DBSTREAM(
