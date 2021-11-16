@@ -13,8 +13,7 @@ import base64
 import datetime
 from scipy.spatial import distance
 import math
-
-# X = [[1, 0.5], [1, 0.625], [1, 0.75], [1, 1.125], [1, 1.5], [1, 1.75], [4, 1.5], [4, 2.25], [4, 2.5], [4, 3],[4, 3.25], [4, 3.5]]
+import pandas as pd
 
 app = Flask(__name__)
 app.config['CORS_HEADERS'] = 'Content-Type'
@@ -51,15 +50,7 @@ def endpoint_learn():
 
     x = {k: v for i, (k, v) in enumerate(request.get_json()['x'].items())}
 
-    c = learn(x)
-
-    y_pred = c.predict_one(x)
-
-    unknown_collection.insert_one({
-        "timestamp": datetime.datetime.now(),
-        "sensors": x,
-        "cluster": y_pred
-    })
+    c, y_pred = learn(x)
 
     return jsonify({'x': x, 'y': y_pred, 'n_clusters': c.n_clusters})
 
@@ -79,8 +70,8 @@ def endpoint_show():
     samples = list(map(lambda x: [x['sensors']['0'], x['sensors']['1'],x['sensors']['2']], unknowns))
 
     dim_x = list(map(lambda x: x['sensors']['0'], unknowns))
-    dim_y = list(map(lambda x: x['sensors']['1'], unknowns))
-    dim_z = list(map(lambda x: x['sensors']['2'], unknowns))
+    dim_y = list(map(lambda x: x['sensors']['2'], unknowns))
+    dim_z = list(map(lambda x: x['sensors']['1'], unknowns))
 
     ax.scatter( dim_x,
                 dim_z,
@@ -127,7 +118,7 @@ def endpoint_known():
     _class = request.get_json()['class']
 
     #distancies calculate - select closest point to center => most relevant
-    cluster_samples = list(map(lambda x: [x['sensors']['0'], x['sensors']['1'], x['sensors']['2']], list(unknown_collection.find({'cluster': cluster}))))
+    cluster_samples = list(map(lambda x: [x['sensors'][str(s)] for s in x['sensors']], list(unknown_collection.find({'cluster': cluster}))))
     cluster_center = [center for i, (k, center) in enumerate(model.centers[cluster].items())]
 
     distances = []
@@ -152,7 +143,8 @@ def endpoint_known():
     restart_model()
 
     #call /classifier/learn/x/y
-    print('known samples... train classifier with x, y')
+    return jsonify({'msg': 'known samples... train classifier with x, y'})
+
 
 def initialize():
     start_database()
@@ -204,14 +196,16 @@ def retrain():
     unknowns = unknown_collection.find({})
 
     for unknown in unknowns:
-        learn(unknown['sensors'])
+        c, y_pred = learn(unknown['sensors'], restart=True)
+        unknown['cluster'] = y_pred
+        unknown_collection.save(unknown)
 
 
 def get_metadata():
     return clusterer_metadata_collection.find_one()
 
 
-def learn(x):
+def learn(x, restart= False):
     global model
 
     c = model
@@ -219,7 +213,16 @@ def learn(x):
     c.learn_one(x)
     c._recluster()
 
-    return c
+    y_pred = c.predict_one(x)
+
+    if (restart == False):
+        unknown_collection.insert_one({
+            "timestamp": datetime.datetime.now(),
+            "sensors": x,
+            "cluster": y_pred
+        })
+
+    return c, y_pred
 
 
 if __name__ == '__main__':

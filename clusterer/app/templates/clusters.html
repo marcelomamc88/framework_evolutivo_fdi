@@ -29,7 +29,7 @@
             var chart = new Highcharts.Chart({			
               chart: {
                 renderTo: 'container',				
-                margin: 100,
+                margin: 50,
                 type: 'scatter3d',
                 animation: false,
                 options3d: {
@@ -75,13 +75,13 @@
                 gridLineWidth: 1
               },			  
               yAxis: {
-                min: {{min[1]}}-0.5,
-                max: {{max[1]}}+0.5,
+                min: {{min[2]}}-0.5,
+                max: {{max[2]}}+0.5,
                 title: null
               },
               zAxis: {
-                min: {{min[2]}}-0.5,
-                max: {{max[2]}}+0.5,
+                min: {{min[1]}}-0.5,
+                max: {{max[1]}}+0.5,
                 showFirstLabel: false
               },
               legend: {
