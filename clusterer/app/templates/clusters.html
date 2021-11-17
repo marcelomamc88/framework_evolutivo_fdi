@@ -100,20 +100,6 @@
 						return '<b>#cluster:</b> ' + y_pred[this.index] + '<br><b>dim_X:</b> ' + this.x + '<br><b>dim_Y:</b> ' + this.y + '<br><b>dim_Z:</b> ' + this.z
 					}
 				},
-              },
-			  {
-				name: 'Centroids',
-                colorByPoint: true,
-				colors: ['blue'],
-                accessibility: {
-                  exposeAsGroupOnly: true
-                },
-                data: {{centers | tojson}},
-				tooltip: {
-				  pointFormatter: function () {
-						return '<b>#cluster:</b> ' + this.index + '<br><b>dim_X:</b> ' + this.x + '<br><b>dim_Y:</b> ' + this.y + '<br><b>dim_Z:</b> ' + this.z
-					}
-				},
               }
 			]
             });

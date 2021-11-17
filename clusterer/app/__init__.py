@@ -14,6 +14,8 @@ import datetime
 from scipy.spatial import distance
 import math
 import pandas as pd
+from river.utils import dict2numpy
+from sklearn import decomposition
 
 app = Flask(__name__)
 app.config['CORS_HEADERS'] = 'Content-Type'
@@ -60,6 +62,12 @@ def endpoint_show():
     color = cm.hsv(np.linspace(0, 1, 20))
     unknowns = list(unknown_collection.find({}))
 
+    read = [dict2numpy(unk['sensors']) for k, unk in enumerate(unknowns)]
+
+    # run pca 3 components
+    pca_3_list = decomposition.PCA(n_components=3).fit(read).transform(read).tolist()
+    df_pca_read = pd.DataFrame(pca_3_list)
+
     # Generate plot
     fig = plt.figure()
     ax = fig.gca(projection='3d')
@@ -67,15 +75,9 @@ def endpoint_show():
     ax.set_ylabel('dim2')
     ax.set_zlabel('dim3')
 
-    samples = list(map(lambda x: [x['sensors']['0'], x['sensors']['1'],x['sensors']['2']], unknowns))
-
-    dim_x = list(map(lambda x: x['sensors']['0'], unknowns))
-    dim_y = list(map(lambda x: x['sensors']['2'], unknowns))
-    dim_z = list(map(lambda x: x['sensors']['1'], unknowns))
-
-    ax.scatter( dim_x,
-                dim_z,
-                dim_y,
+    ax.scatter( list(map(lambda x: x['sensors']['0'], unknowns)),
+                list(map(lambda x: x['sensors']['1'], unknowns)),
+                list(map(lambda x: x['sensors']['2'], unknowns)),
                 c=list(map(lambda x: color[x['cluster']], unknowns)),
                 marker='.')
 
@@ -84,11 +86,6 @@ def endpoint_show():
                 [centers['2'] for i, (k, centers) in enumerate(model.centers.items())],
                 c='blue',
                 marker='*')
-
-    centers = [[centers['0'] for i, (k, centers) in enumerate(model.centers.items())],
-               [centers['1'] for i, (k, centers) in enumerate(model.centers.items())],
-               [centers['2'] for i, (k, centers) in enumerate(model.centers.items())]
-            ]
 
     # Convert plot to PNG image
     pngImage = io.BytesIO()
@@ -99,11 +96,10 @@ def endpoint_show():
     pngImageB64String += base64.b64encode(pngImage.getvalue()).decode('utf8')
 
     return render_template("clusters.html",
-                           samples=samples,
-                           centers=np.transpose(centers).tolist(),
+                           samples=pca_3_list,
                            y_pred=list(map(lambda x: x['cluster'], unknowns)),
-                           min=[np.amin(dim_x), np.amin(dim_y), np.amin(dim_z)],
-                           max=[np.amax(dim_x),np.amax(dim_y),np.amax(dim_z)],
+                           min=[np.floor(df_pca_read[x].min()) for x in np.arange(df_pca_read.shape[1])],
+                           max=[np.ceil(df_pca_read[x].max()) for x in np.arange(df_pca_read.shape[1])],
                            colors=list(map(lambda x: cm.colors.to_hex(color[x['cluster']]), unknowns)),
                            image=pngImageB64String
                         )
