@@ -16,6 +16,12 @@ import math
 import pandas as pd
 from river.utils import dict2numpy
 from sklearn import decomposition
+from river import stream
+from sklearn.cluster import DBSCAN
+from river import linear_model, metrics, multiclass, preprocessing
+import requests
+import json
+from river.utils import numpy2dict
 
 app = Flask(__name__)
 app.config['CORS_HEADERS'] = 'Content-Type'
@@ -48,19 +54,33 @@ def endpoint_info():
 
 @app.route('/clusterer/learn', methods=['GET'])
 def endpoint_learn():
-    global unknown_collection
 
-    x = {k: v for i, (k, v) in enumerate(request.get_json()['x'].items())}
+    x = {str(k): v for i, (k, v) in enumerate(request.get_json()['x'].items())}
 
     c, y_pred = learn(x)
 
     return jsonify({'x': x, 'y': y_pred, 'n_clusters': c.n_clusters})
 
 
+@app.route('/clusterer/setup', methods=['GET'])
+def endpoint_setup():
+    # only run the calculations. doesnt update the database with the new labels.
+
+    initialize({
+        'clustering_threshold': request.get_json()['hiperparameters']['clustering_threshold'],
+        'fading_factor': request.get_json()['hiperparameters']['fading_factor'],
+        'cleanup_interval': request.get_json()['hiperparameters']['cleanup_interval'],
+        'intersection_factor':request.get_json()['hiperparameters']['intersection_factor'],
+        'minimum_weight': request.get_json()['hiperparameters']['minimum_weight']
+    })
+
+    return jsonify({'n_clusters': model.n_clusters})
+
+
 @app.route('/clusterer/show', methods=['GET'])
 def endpoint_show():
-    color = cm.hsv(np.linspace(0, 1, 20))
     unknowns = list(unknown_collection.find({}))
+    color = cm.hsv(np.linspace(0, 1, len(np.unique(list(map(lambda x: x['cluster'], unknowns))))))
 
     read = [dict2numpy(unk['sensors']) for k, unk in enumerate(unknowns)]
 
@@ -75,15 +95,15 @@ def endpoint_show():
     ax.set_ylabel('dim2')
     ax.set_zlabel('dim3')
 
-    ax.scatter( list(map(lambda x: x['sensors']['0'], unknowns)),
-                list(map(lambda x: x['sensors']['1'], unknowns)),
+    ax.scatter( list(map(lambda x: x['sensors']['0'], unknowns)), # nao eh DIM 1
                 list(map(lambda x: x['sensors']['2'], unknowns)),
+                list(map(lambda x: x['sensors']['1'], unknowns)),
                 c=list(map(lambda x: color[x['cluster']], unknowns)),
                 marker='.')
 
     ax.scatter( [centers['0'] for i, (k, centers) in enumerate(model.centers.items())],
-                [centers['1'] for i, (k, centers) in enumerate(model.centers.items())],
                 [centers['2'] for i, (k, centers) in enumerate(model.centers.items())],
+                [centers['1'] for i, (k, centers) in enumerate(model.centers.items())],
                 c='blue',
                 marker='*')
 
@@ -133,18 +153,24 @@ def endpoint_known():
     x = [cluster_samples[k] for k in closest_samples_keys]
 
     #registries remove from unknown collection
-    unknown_collection.delete_many({"cluster": cluster})
+    #unknown_collection.delete_many({"cluster": cluster})
 
     #retrain
-    restart_model()
+    #restart_model()
 
     #call /classifier/learn/x/y
+
+
     return jsonify({'msg': 'known samples... train classifier with x, y'})
 
 
-def initialize():
+def initialize(setup = {}):
     start_database()
-    restart_model()
+
+    if (not setup):
+        restart_model() # restart default
+    else:
+        restart_model(setup)
 
     print('clusterer component has been initialized...')
 
@@ -158,15 +184,19 @@ def start_database():
     clusterer_metadata_collection = fdi_db.clusterer_metadata
 
 
-def restart_model():
+def restart_model(setup = { 'clustering_threshold': 3,
+                            'fading_factor': 0.1,
+                            'cleanup_interval': 0.001,
+                            'intersection_factor': 1,
+                            'minimum_weight': 0.5}):
     global model
 
     model = cluster.DBSTREAM(
-        clustering_threshold=2.3,
-        fading_factor=0.75,
-        cleanup_interval=1,
-        intersection_factor=0.1,
-        minimum_weight=3)
+       clustering_threshold=setup['clustering_threshold'],
+       fading_factor=setup['fading_factor'],
+       cleanup_interval=setup['cleanup_interval'],
+       intersection_factor=setup['intersection_factor'],
+        minimum_weight=setup['minimum_weight'])
 
     start_metadata()
     retrain()
@@ -204,21 +234,19 @@ def get_metadata():
 def learn(x, restart= False):
     global model
 
-    c = model
+    model.learn_one(x)
+    model._recluster()
 
-    c.learn_one(x)
-    c._recluster()
+    y_pred = model.predict_one(x)
 
-    y_pred = c.predict_one(x)
+    # if (restart == False):
+    #     unknown_collection.insert_one({
+    #         "timestamp": datetime.datetime.now(),
+    #         "sensors": x,
+    #         "cluster": y_pred
+    #     })
 
-    if (restart == False):
-        unknown_collection.insert_one({
-            "timestamp": datetime.datetime.now(),
-            "sensors": x,
-            "cluster": y_pred
-        })
-
-    return c, y_pred
+    return model, y_pred
 
 
 if __name__ == '__main__':

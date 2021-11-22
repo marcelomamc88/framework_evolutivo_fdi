@@ -19,7 +19,6 @@ dataset = pd.read_csv(datasets.ImageSegments().path)
 
 dataset['categorical_label'] = LabelEncoder().fit_transform(dataset['category'])
 
-
 df = dataset
 Y = df.pop('category')
 Y_label = df.pop('categorical_label')
@@ -29,23 +28,12 @@ predict = []
 truth = []
 
 for k, x in df.iterrows():
-    ground_truth = int(Y_label[k])
+    send('/learn', {'x': numpy2dict(x.to_numpy()), 'y': int(Y_label[k])})
 
-    if ground_truth in contador.keys():
-        contador[ground_truth] = contador[ground_truth] + 1
-    else:
-        contador[ground_truth] = 1
+for k, x in df.iterrows():
+    predict.append(send('/predict', {'x': numpy2dict(x.to_numpy())})['y_pred'])
+    truth.append(int(Y_label[k]))
 
-    if (contador[ground_truth] > 200):
-        y_pred = send('/predict', {'x': numpy2dict(x.to_numpy())})['y_pred']
-
-        predict.append(y_pred)
-        truth.append(ground_truth)
-
-        #if (not (y_pred is None)):
-         #   print(str(k) + ': # label : ' + str(contador[ground_truth]) + ' : y ' + str(y_pred))
-
-    send('/learn', {'x': numpy2dict(x.to_numpy()), 'y': ground_truth})
 
 print(accuracy_score(truth, predict))
 
