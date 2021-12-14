@@ -51,6 +51,8 @@ double *pInputNode6;
 double *pInputNode7;
 double *pInputNode8;
 double *pInputNode9;
+double *pInputNode10;
+double *pInputNode11;
 double *pOutputNode0;
 double *pOutputNode1;
 double *pOutputNode2;
@@ -89,7 +91,7 @@ static void mdlInitializeSizes(SimStruct *S)
 #endif
 
     //Define S-function input signals
-    if (!ssSetNumInputPorts(S,10)) return;				//Number of input signals
+    if (!ssSetNumInputPorts(S,12)) return;				//Number of input signals
     ssSetInputPortWidth(S, 0, DYNAMICALLY_SIZED);		//Input signal 0
     ssSetInputPortDirectFeedThrough(S, 0, 1);
     ssSetInputPortWidth(S, 1, DYNAMICALLY_SIZED);		//Input signal 1
@@ -110,6 +112,10 @@ static void mdlInitializeSizes(SimStruct *S)
     ssSetInputPortDirectFeedThrough(S, 8, 1);
     ssSetInputPortWidth(S, 9, DYNAMICALLY_SIZED);		//Input signal 9
     ssSetInputPortDirectFeedThrough(S, 9, 1);
+    ssSetInputPortWidth(S, 10, DYNAMICALLY_SIZED);		//Input signal 10
+    ssSetInputPortDirectFeedThrough(S, 10, 1);
+    ssSetInputPortWidth(S, 11, DYNAMICALLY_SIZED);		//Input signal 11
+    ssSetInputPortDirectFeedThrough(S, 11, 1);
 
     //Define S-function output signals
     if (!ssSetNumOutputPorts(S,26)) return;				//Number of output signals
@@ -212,8 +218,10 @@ static void mdlStart(SimStruct *S)
     pInputNode5 = pComponentSystem->getSubComponentSystem("Subsystem")->getSubComponentSystem("Left_Airleron")->getSubComponent("Input_Fault_Bp_Amplitude")->getSafeNodeDataPtr("out", 0);
     pInputNode6 = pComponentSystem->getSubComponentSystem("Subsystem")->getSubComponentSystem("Left_Airleron")->getSubComponent("Input_Fault_Bp_Time")->getSafeNodeDataPtr("out", 0);
     pInputNode7 = pComponentSystem->getSubComponentSystem("Subsystem")->getSubComponentSystem("Left_Airleron")->getSubComponent("Input_Fault_c_leak_Amplitude")->getSafeNodeDataPtr("out", 0);
-    pInputNode8 = pComponentSystem->getSubComponentSystem("Subsystem")->getSubComponentSystem("Left_Airleron")->getSubComponent("Input_Fault_c_leak_Amplitude_1")->getSafeNodeDataPtr("out", 0);
-    pInputNode9 = pComponentSystem->getSubComponentSystem("Subsystem")->getSubComponentSystem("Left_Airleron")->getSubComponent("Input_Valve_Fault_Time_CilindA")->getSafeNodeDataPtr("out", 0);
+    pInputNode8 = pComponentSystem->getSubComponentSystem("Subsystem")->getSubComponentSystem("Left_Airleron")->getSubComponent("Input_Fault_c_leak_Time")->getSafeNodeDataPtr("out", 0);
+    pInputNode9 = pComponentSystem->getSubComponentSystem("Subsystem")->getSubComponentSystem("Left_Airleron")->getSubComponent("Input_Valve_Fault_Amplitude_CilindA")->getSafeNodeDataPtr("out", 0);
+    pInputNode10 = pComponentSystem->getSubComponentSystem("Subsystem")->getSubComponentSystem("Left_Airleron")->getSubComponent("Input_Valve_Fault_Fixed_Position_CilindA")->getSafeNodeDataPtr("out", 0);
+    pInputNode11 = pComponentSystem->getSubComponentSystem("Subsystem")->getSubComponentSystem("Left_Airleron")->getSubComponent("Input_Valve_Fault_Time_CilindA")->getSafeNodeDataPtr("out", 0);
     pOutputNode0 = pComponentSystem->getSubComponentSystem("Subsystem")->getSubComponentSystem("Left_Airleron")->getSubComponent("Output_Angle")->getSafeNodeDataPtr("in", 0);
     pOutputNode1 = pComponentSystem->getSubComponentSystem("Subsystem")->getSubComponentSystem("Left_Airleron")->getSubComponent("Output_Flow_Chamber1_CilindA")->getSafeNodeDataPtr("in", 0);
     pOutputNode2 = pComponentSystem->getSubComponentSystem("Subsystem")->getSubComponentSystem("Left_Airleron")->getSubComponent("Output_Flow_Chamber1_CilindB")->getSafeNodeDataPtr("in", 0);
@@ -292,6 +300,8 @@ static void mdlOutputs(SimStruct *S, int_T tid)
     (*pInputNode7) = (*uPtrs1[7]);
     (*pInputNode8) = (*uPtrs1[8]);
     (*pInputNode9) = (*uPtrs1[9]);
+    (*pInputNode10) = (*uPtrs1[10]);
+    (*pInputNode11) = (*uPtrs1[11]);
 
     //Simulate Hopsan until it reaches current Simulink time
     double time = ssGetT(S);
