@@ -24,3 +24,5 @@ input.valve.time = 0
 
 %% PLOT SIGNALS
 plot(out.yout.time, [out.yout.signals.values(:,22)])
+% OR
+plot(ans.yout.time, [ans.yout.signals.values(:,22)])

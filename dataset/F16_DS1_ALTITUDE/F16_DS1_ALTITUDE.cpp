@@ -170,7 +170,7 @@ static void mdlInitializeSizes(SimStruct *S)
         ssSetErrorStatus(S,"Error could not open model: F16_DS1_ALTITUDE.hmf");
         return;
     }
-    pComponentSystem->setDesiredTimestep(0.002);
+    pComponentSystem->setDesiredTimestep(0.0002);
 
     //Setup block mask (e.g. update icon, graphics etc for Simulink block)
     mexCallMATLAB(0, 0, 0, 0, "F16_DS1_ALTITUDEMaskSetup"); //Run the port label script
