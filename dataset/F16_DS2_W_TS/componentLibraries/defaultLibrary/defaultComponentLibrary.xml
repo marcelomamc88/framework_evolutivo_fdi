@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hopsancomponentlibrary xmlversion="0.1" libversion="1">
+  <id>59c07d33-554f-49d3-a163-a928823d4380</id>
+  <name>HopsanDefaultComponentLibrary</name>
+<!-- The lib element is removed here since the default library code is built into the Hopsan Core -->
+<!--  <lib debug_ext="_d">defaultcomponentlibrary</lib>  -->
+  <source>defaultComponentLibrary.cpp</source>
+  <source>defaultComponentLibraryInternal.cpp</source>
+</hopsancomponentlibrary>
