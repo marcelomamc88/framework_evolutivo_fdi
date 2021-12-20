@@ -79,8 +79,8 @@ for i=1:epochs
     read_1 = decimate(output_arr(:,1), downsample_factor,'fir');
     output_reduced = zeros(size(read_1, 1), 25);
     output_reduced(:,1) = read_1;
-    for i=2:size(output_arr,2)
-        output_reduced(:,i) = decimate(output_arr(:,i), downsample_factor,'fir');   
+    for j=2:size(output_arr,2)
+        output_reduced(:,j) = decimate(output_arr(:,j), downsample_factor,'fir');   
     end
     
     %%%%%%%%%%%%%%%%%%
