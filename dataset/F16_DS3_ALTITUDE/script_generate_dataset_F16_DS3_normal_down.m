@@ -12,12 +12,12 @@ frequency = 10; % Herts
 simulation_time = 100; % Seconds
 datapoints = simulation_time * frequency;
 
-writefile = true;
+writefile = false;
 write_factor = 100; % write in file each X flights
 file_name = 'F16_DS3_normal_t2_decrease.csv';
 file_name_simulink_model = 'F16_DS3_ALTITUDE_SIMULINK.slx';
 
-flights = 1000; % qty of flights to generate data
+flights = 1; % qty of flights to generate data
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% DEFAULT VALUES - NO FAULT %%%
