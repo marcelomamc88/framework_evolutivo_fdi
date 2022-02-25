@@ -1,0 +1,600 @@
+Agglomerative Clustering 2 n1, n2, f2, f3 25 cosine complete
+0.5349006190755183
+0.9936789382335719
+Agglomerative Clustering 3 n1, n2, f2, f3 25 cosine average
+0.6014721120385291
+0.9956067450444088
+Agglomerative Clustering 4 n1, n2, f2, f3 25 cosine single
+0.13385037604913655
+0.9966381045258975
+Agglomerative Clustering 6 n1, n2, f2, f3 25 manhattan complete
+0.7443215067430784
+0.9566953224454425
+Agglomerative Clustering 7 n1, n2, f2, f3 25 manhattan average
+0.7623215797625976
+0.9902042777392493
+Agglomerative Clustering 8 n1, n2, f2, f3 25 manhattan single
+0.33413142307278965
+0.5456453213206386
+Agglomerative Clustering 9 n1, n2, f2, f3 25 euclidean ward
+0.6107794808482875
+0.9954348910344203
+Agglomerative Clustering 10 n1, n2, f2, f3 25 euclidean complete
+0.71289997535523
+0.9529759734801081
+Agglomerative Clustering 11 n1, n2, f2, f3 25 euclidean average
+0.7660128810821387
+0.9963204930177347
+Agglomerative Clustering 12 n1, n2, f2, f3 25 euclidean single
+0.33413142307278965
+0.5456453213206386
+Agglomerative Clustering 14 n1, n2, f2, f3 50 cosine complete
+0.3575278760756795
+0.9956067450444087
+Agglomerative Clustering 15 n1, n2, f2, f3 50 cosine average
+0.5388471112735668
+0.9965714443213135
+Agglomerative Clustering 16 n1, n2, f2, f3 50 cosine single
+-0.1790431057885913
+0.9966381045258986
+Agglomerative Clustering 18 n1, n2, f2, f3 50 manhattan complete
+0.6461129560756294
+1.0000000000000004
+Agglomerative Clustering 19 n1, n2, f2, f3 50 manhattan average
+0.7086880490406869
+0.9939367238552699
+Agglomerative Clustering 20 n1, n2, f2, f3 50 manhattan single
+0.48968989777821
+0.9999999999999998
+Agglomerative Clustering 21 n1, n2, f2, f3 50 euclidean ward
+0.5217685763687798
+0.9985140892267927
+Agglomerative Clustering 22 n1, n2, f2, f3 50 euclidean complete
+0.6514911800616712
+0.9994252835873142
+Agglomerative Clustering 23 n1, n2, f2, f3 50 euclidean average
+0.7129668455946312
+1.0000000000000007
+Agglomerative Clustering 24 n1, n2, f2, f3 50 euclidean single
+0.4898618940201775
+1.0
+Agglomerative Clustering 26 n1, n2, f2, f3 100 cosine complete
+0.35751268923332696
+0.996571444321313
+Agglomerative Clustering 27 n1, n2, f2, f3 100 cosine average
+0.45903225321125535
+0.9966381045258993
+Agglomerative Clustering 28 n1, n2, f2, f3 100 cosine single
+-0.03065560267111377
+0.9966381045258977
+Agglomerative Clustering 30 n1, n2, f2, f3 100 manhattan complete
+0.4930035775237968
+0.9999999999999993
+Agglomerative Clustering 31 n1, n2, f2, f3 100 manhattan average
+0.501295984616032
+1.0
+Agglomerative Clustering 32 n1, n2, f2, f3 100 manhattan single
+0.15007529314405985
+0.9999999999999999
+Agglomerative Clustering 33 n1, n2, f2, f3 100 euclidean ward
+0.4305332195904899
+1.0
+Agglomerative Clustering 34 n1, n2, f2, f3 100 euclidean complete
+0.41706312531542106
+0.9999999999999993
+Agglomerative Clustering 35 n1, n2, f2, f3 100 euclidean average
+0.5198697383810609
+0.9999999999999998
+Agglomerative Clustering 36 n1, n2, f2, f3 100 euclidean single
+0.14414566277972707
+1.0
+Agglomerative Clustering 38 n1, n2, f2, f3 300 cosine complete
+0.3387949592131689
+0.9973833120420471
+Agglomerative Clustering 39 n1, n2, f2, f3 300 cosine average
+0.3544531049902146
+0.9973833120420473
+Agglomerative Clustering 40 n1, n2, f2, f3 300 cosine single
+-0.1856995872983685
+0.9981069226912825
+Agglomerative Clustering 42 n1, n2, f2, f3 300 manhattan complete
+0.41645435193224933
+0.9999999999999998
+Agglomerative Clustering 43 n1, n2, f2, f3 300 manhattan average
+0.4842320912866871
+0.9999999999999997
+Agglomerative Clustering 44 n1, n2, f2, f3 300 manhattan single
+0.008976636606157655
+0.9999999999999989
+Agglomerative Clustering 45 n1, n2, f2, f3 300 euclidean ward
+0.4057481508735625
+1.0
+Agglomerative Clustering 46 n1, n2, f2, f3 300 euclidean complete
+0.42355818624418307
+1.0000000000000002
+Agglomerative Clustering 47 n1, n2, f2, f3 300 euclidean average
+0.4801646660659783
+1.0
+Agglomerative Clustering 48 n1, n2, f2, f3 300 euclidean single
+0.011043204265206668
+1.0000000000000002
+Agglomerative Clustering 2 f1, f2, f3, f4 25 cosine complete
+0.6403234739718082
+0.9609136476835723
+Agglomerative Clustering 3 f1, f2, f3, f4 25 cosine average
+0.6269183724095166
+0.842713171003296
+Agglomerative Clustering 4 f1, f2, f3, f4 25 cosine single
+-0.0872295530473678
+0.4168738313310137
+Agglomerative Clustering 6 f1, f2, f3, f4 25 manhattan complete
+0.694659583564914
+0.7559275994739784
+Agglomerative Clustering 7 f1, f2, f3, f4 25 manhattan average
+0.7329708164093099
+0.8484578436818991
+Agglomerative Clustering 8 f1, f2, f3, f4 25 manhattan single
+0.6128649891754796
+0.7520319924530059
+Agglomerative Clustering 9 f1, f2, f3, f4 25 euclidean ward
+0.6953812686773225
+0.9878340465692794
+Agglomerative Clustering 10 f1, f2, f3, f4 25 euclidean complete
+0.6159784494741486
+0.7517662386643442
+Agglomerative Clustering 11 f1, f2, f3, f4 25 euclidean average
+0.7484338281600262
+0.8441157171747831
+Agglomerative Clustering 12 f1, f2, f3, f4 25 euclidean single
+0.62419217564472
+0.7514047026021865
+Agglomerative Clustering 14 f1, f2, f3, f4 50 cosine complete
+0.5798043732356726
+0.9753964759938528
+Agglomerative Clustering 15 f1, f2, f3, f4 50 cosine average
+0.6371804555245691
+0.976773507968231
+Agglomerative Clustering 16 f1, f2, f3, f4 50 cosine single
+-0.30009925600609894
+0.42637219758414036
+Agglomerative Clustering 18 f1, f2, f3, f4 50 manhattan complete
+0.5796640528486139
+0.9735622744409044
+Agglomerative Clustering 19 f1, f2, f3, f4 50 manhattan average
+0.688453580647182
+0.996800107352001
+Agglomerative Clustering 20 f1, f2, f3, f4 50 manhattan single
+0.1393915617225171
+0.7559874357936386
+Agglomerative Clustering 21 f1, f2, f3, f4 50 euclidean ward
+0.5587614351068667
+0.997945134965089
+Agglomerative Clustering 22 f1, f2, f3, f4 50 euclidean complete
+0.5953786451181959
+0.9820905407540186
+Agglomerative Clustering 23 f1, f2, f3, f4 50 euclidean average
+0.6771832265055189
+0.9957720811215174
+Agglomerative Clustering 24 f1, f2, f3, f4 50 euclidean single
+0.1752606678123799
+0.7558644249027208
+Agglomerative Clustering 26 f1, f2, f3, f4 100 cosine complete
+0.5140871297299361
+0.9929723374503209
+Agglomerative Clustering 27 f1, f2, f3, f4 100 cosine average
+0.541840892856867
+0.9888799884368891
+Agglomerative Clustering 28 f1, f2, f3, f4 100 cosine single
+0.07108337755272842
+0.7602724346185855
+Agglomerative Clustering 30 f1, f2, f3, f4 100 manhattan complete
+0.5506292568769665
+0.9968456456946164
+Agglomerative Clustering 31 f1, f2, f3, f4 100 manhattan average
+0.5462339590554204
+0.9968062865225671
+Agglomerative Clustering 32 f1, f2, f3, f4 100 manhattan single
+0.3910908407158863
+0.998216917186689
+Agglomerative Clustering 33 f1, f2, f3, f4 100 euclidean ward
+0.4750390952906569
+0.9982169171866887
+Agglomerative Clustering 34 f1, f2, f3, f4 100 euclidean complete
+0.5512546052240812
+0.9962508442913544
+Agglomerative Clustering 35 f1, f2, f3, f4 100 euclidean average
+0.5591750808728714
+0.9982169171866891
+Agglomerative Clustering 36 f1, f2, f3, f4 100 euclidean single
+0.381344011536777
+0.9982169171866886
+Agglomerative Clustering 38 f1, f2, f3, f4 300 cosine complete
+0.39270078427220745
+0.9943105326248266
+Agglomerative Clustering 39 f1, f2, f3, f4 300 cosine average
+0.41482326584746554
+0.9944435357369563
+Agglomerative Clustering 40 f1, f2, f3, f4 300 cosine single
+-0.06741463053818703
+0.9921479595587461
+Agglomerative Clustering 42 f1, f2, f3, f4 300 manhattan complete
+0.45015934715045836
+0.9982169171866884
+Agglomerative Clustering 43 f1, f2, f3, f4 300 manhattan average
+0.5085274198430718
+0.9982169171866885
+Agglomerative Clustering 44 f1, f2, f3, f4 300 manhattan single
+-0.09094973050149567
+0.9982169171866886
+Agglomerative Clustering 45 f1, f2, f3, f4 300 euclidean ward
+0.4288730699406468
+0.9982169171866885
+Agglomerative Clustering 46 f1, f2, f3, f4 300 euclidean complete
+0.45660175886468457
+0.9982169171866887
+Agglomerative Clustering 47 f1, f2, f3, f4 300 euclidean average
+0.5117159033242524
+0.9982169171866888
+Agglomerative Clustering 48 f1, f2, f3, f4 300 euclidean single
+-0.10717927600787583
+0.9982169171866886
+Agglomerative Clustering 2 n1, f1, f2, f3 25 cosine complete
+0.5301156983895405
+0.7476088299148402
+Agglomerative Clustering 3 n1, f1, f2, f3 25 cosine average
+0.6102765883602592
+0.7475892483253258
+Agglomerative Clustering 4 n1, f1, f2, f3 25 cosine single
+0.3180527440607037
+0.7487122941912422
+Agglomerative Clustering 6 n1, f1, f2, f3 25 manhattan complete
+0.7799509857906207
+0.7192650216365074
+Agglomerative Clustering 7 n1, f1, f2, f3 25 manhattan average
+0.7685909420133169
+0.7491872098391792
+Agglomerative Clustering 8 n1, f1, f2, f3 25 manhattan single
+0.38969407607111484
+0.41152729370485935
+Agglomerative Clustering 9 n1, f1, f2, f3 25 euclidean ward
+0.6270647142345761
+0.7543657243273856
+Agglomerative Clustering 10 n1, f1, f2, f3 25 euclidean complete
+0.6982510501963755
+0.6032010986630281
+Agglomerative Clustering 11 n1, f1, f2, f3 25 euclidean average
+0.7898156426075329
+0.7495705658268517
+Agglomerative Clustering 12 n1, f1, f2, f3 25 euclidean single
+0.38972874556550036
+0.41142844604813494
+Agglomerative Clustering 14 n1, f1, f2, f3 50 cosine complete
+0.48423207161856496
+0.7555495384670489
+Agglomerative Clustering 15 n1, f1, f2, f3 50 cosine average
+0.5126027330928864
+0.7616024343658467
+Agglomerative Clustering 16 n1, f1, f2, f3 50 cosine single
+0.2082632778225354
+0.7594538766172579
+Agglomerative Clustering 18 n1, f1, f2, f3 50 manhattan complete
+0.672297812870774
+0.7592543867462636
+Agglomerative Clustering 19 n1, f1, f2, f3 50 manhattan average
+0.7396176813989479
+0.7539692943263766
+Agglomerative Clustering 20 n1, f1, f2, f3 50 manhattan single
+-0.0611402562471465
+0.42086776589954533
+Agglomerative Clustering 21 n1, f1, f2, f3 50 euclidean ward
+0.5543260524799072
+0.7612465540423324
+Agglomerative Clustering 22 n1, f1, f2, f3 50 euclidean complete
+0.6649637251174736
+0.7538476634134309
+Agglomerative Clustering 23 n1, f1, f2, f3 50 euclidean average
+0.7336656506781881
+0.7542323518894264
+Agglomerative Clustering 24 n1, f1, f2, f3 50 euclidean single
+0.40176003725521675
+0.7575472944142798
+Agglomerative Clustering 26 n1, f1, f2, f3 100 cosine complete
+0.48134167681083273
+0.7739383931003625
+Agglomerative Clustering 27 n1, f1, f2, f3 100 cosine average
+0.45511840341593385
+0.7702885084157899
+Agglomerative Clustering 28 n1, f1, f2, f3 100 cosine single
+0.09931515669158995
+0.7634461223197557
+Agglomerative Clustering 30 n1, f1, f2, f3 100 manhattan complete
+0.5136032931248653
+0.7633249514809392
+Agglomerative Clustering 31 n1, f1, f2, f3 100 manhattan average
+0.5419822228497513
+0.765021032443835
+Agglomerative Clustering 32 n1, f1, f2, f3 100 manhattan single
+0.24019899078297846
+0.7622261196004774
+Agglomerative Clustering 33 n1, f1, f2, f3 100 euclidean ward
+0.4410888292936092
+0.7655899651142056
+Agglomerative Clustering 34 n1, f1, f2, f3 100 euclidean complete
+0.5217143898123027
+0.7614936516859591
+Agglomerative Clustering 35 n1, f1, f2, f3 100 euclidean average
+0.5661104688485444
+0.7648991549086863
+Agglomerative Clustering 36 n1, f1, f2, f3 100 euclidean single
+0.23920306867558172
+0.7634521379437177
+Agglomerative Clustering 38 n1, f1, f2, f3 300 cosine complete
+0.35905408353298596
+0.783997724069424
+Agglomerative Clustering 39 n1, f1, f2, f3 300 cosine average
+0.31647137770810685
+0.7853750919138915
+Agglomerative Clustering 40 n1, f1, f2, f3 300 cosine single
+-0.1130624873877821
+0.7758208277390239
+Agglomerative Clustering 42 n1, f1, f2, f3 300 manhattan complete
+0.4215795986055572
+0.7821985845105083
+Agglomerative Clustering 43 n1, f1, f2, f3 300 manhattan average
+0.513135796204936
+0.7813639467576186
+Agglomerative Clustering 44 n1, f1, f2, f3 300 manhattan single
+-0.03232211546859702
+0.7702303226327734
+Agglomerative Clustering 45 n1, f1, f2, f3 300 euclidean ward
+0.39097636462878954
+0.8236221039600792
+Agglomerative Clustering 46 n1, f1, f2, f3 300 euclidean complete
+0.40388081030993694
+0.7845835034147226
+Agglomerative Clustering 47 n1, f1, f2, f3 300 euclidean average
+0.5018885270002846
+0.7811197758195979
+Agglomerative Clustering 48 n1, f1, f2, f3 300 euclidean single
+0.0026873955891649074
+0.7706754850704147
+Agglomerative Clustering 2 n2, f2, f4 25 cosine complete
+0.5854842700661027
+0.9955026996011175
+Agglomerative Clustering 3 n2, f2, f4 25 cosine average
+0.7115742301645636
+0.9956473115898441
+Agglomerative Clustering 4 n2, f2, f4 25 cosine single
+0.7374547933982776
+0.9987381404928575
+Agglomerative Clustering 6 n2, f2, f4 25 manhattan complete
+0.622533822974626
+0.9979469101232001
+Agglomerative Clustering 7 n2, f2, f4 25 manhattan average
+0.7382975384305064
+0.9979469101231999
+Agglomerative Clustering 8 n2, f2, f4 25 manhattan single
+0.79868902596091
+0.9987381404928574
+Agglomerative Clustering 9 n2, f2, f4 25 euclidean ward
+0.6042305971954066
+0.9969549707248488
+Agglomerative Clustering 10 n2, f2, f4 25 euclidean complete
+0.7374485109798204
+0.9979469101232001
+Agglomerative Clustering 11 n2, f2, f4 25 euclidean average
+0.7459564136250986
+0.9979469101231997
+Agglomerative Clustering 12 n2, f2, f4 25 euclidean single
+0.79868902596091
+0.9987381404928574
+Agglomerative Clustering 14 n2, f2, f4 50 cosine complete
+0.5173372704334297
+0.9962087696303429
+Agglomerative Clustering 15 n2, f2, f4 50 cosine average
+0.5721783426848934
+0.9987381404928568
+Agglomerative Clustering 16 n2, f2, f4 50 cosine single
+0.5946571768664606
+0.9987381404928569
+Agglomerative Clustering 18 n2, f2, f4 50 manhattan complete
+0.5769717318516331
+0.9987381404928569
+Agglomerative Clustering 19 n2, f2, f4 50 manhattan average
+0.5855270381197293
+0.9987381404928568
+Agglomerative Clustering 20 n2, f2, f4 50 manhattan single
+0.5385636978740408
+0.9987381404928571
+Agglomerative Clustering 21 n2, f2, f4 50 euclidean ward
+0.5362161719673342
+0.9979469101231994
+Agglomerative Clustering 22 n2, f2, f4 50 euclidean complete
+0.4793142872682306
+0.9987381404928568
+Agglomerative Clustering 23 n2, f2, f4 50 euclidean average
+0.5911601987925352
+0.9987381404928563
+Agglomerative Clustering 24 n2, f2, f4 50 euclidean single
+0.5162615382016402
+0.9987381404928571
+Agglomerative Clustering 26 n2, f2, f4 100 cosine complete
+0.5056457475357399
+0.9987381404928569
+Agglomerative Clustering 27 n2, f2, f4 100 cosine average
+0.5330645378256819
+0.9987381404928568
+Agglomerative Clustering 28 n2, f2, f4 100 cosine single
+0.2804658511579031
+0.9987381404928566
+Agglomerative Clustering 30 n2, f2, f4 100 manhattan complete
+0.5420601649917614
+0.9987381404928569
+Agglomerative Clustering 31 n2, f2, f4 100 manhattan average
+0.5808856066550903
+0.9987381404928573
+Agglomerative Clustering 32 n2, f2, f4 100 manhattan single
+0.4151462654774947
+0.9987381404928574
+Agglomerative Clustering 33 n2, f2, f4 100 euclidean ward
+0.4536201272283139
+0.9987381404928568
+Agglomerative Clustering 34 n2, f2, f4 100 euclidean complete
+0.46099246636155566
+0.9987381404928569
+Agglomerative Clustering 35 n2, f2, f4 100 euclidean average
+0.5791583545112694
+0.9987381404928569
+Agglomerative Clustering 36 n2, f2, f4 100 euclidean single
+0.44934601047834516
+0.9987381404928569
+Agglomerative Clustering 38 n2, f2, f4 300 cosine complete
+0.4321252009639309
+0.9987381404928568
+Agglomerative Clustering 39 n2, f2, f4 300 cosine average
+0.4419698919613533
+0.998738140492857
+Agglomerative Clustering 40 n2, f2, f4 300 cosine single
+-0.2717882588798665
+0.9987381404928568
+Agglomerative Clustering 42 n2, f2, f4 300 manhattan complete
+0.43721153557627984
+0.9987381404928575
+Agglomerative Clustering 43 n2, f2, f4 300 manhattan average
+0.4555294963546721
+0.9987381404928569
+Agglomerative Clustering 44 n2, f2, f4 300 manhattan single
+-0.2487640515993783
+0.9987381404928571
+Agglomerative Clustering 45 n2, f2, f4 300 euclidean ward
+0.4639917945262596
+0.9987381404928569
+Agglomerative Clustering 46 n2, f2, f4 300 euclidean complete
+0.46215886798490247
+0.998738140492857
+Agglomerative Clustering 47 n2, f2, f4 300 euclidean average
+0.47837442844389244
+0.9987381404928571
+Agglomerative Clustering 48 n2, f2, f4 300 euclidean single
+-0.28187869358483153
+0.9987381404928568
+Agglomerative Clustering 2 n1, f1, f2, f4 25 cosine complete
+0.4005198181721305
+0.7575887096360082
+Agglomerative Clustering 3 n1, f1, f2, f4 25 cosine average
+0.7135091796989578
+0.7530672424219275
+Agglomerative Clustering 4 n1, f1, f2, f4 25 cosine single
+0.6154270189019961
+0.7562044254841905
+Agglomerative Clustering 6 n1, f1, f2, f4 25 manhattan complete
+0.6335703927634417
+0.7569777868542937
+Agglomerative Clustering 7 n1, f1, f2, f4 25 manhattan average
+0.8240554923210154
+0.753132758607875
+Agglomerative Clustering 8 n1, f1, f2, f4 25 manhattan single
+0.8298021713683963
+0.7512176472960138
+Agglomerative Clustering 9 n1, f1, f2, f4 25 euclidean ward
+0.5903086090111345
+0.7520591611533101
+Agglomerative Clustering 10 n1, f1, f2, f4 25 euclidean complete
+0.675111428754552
+0.7531024422509998
+Agglomerative Clustering 11 n1, f1, f2, f4 25 euclidean average
+0.8237796208130144
+0.7531193425144511
+Agglomerative Clustering 12 n1, f1, f2, f4 25 euclidean single
+0.8298021713683963
+0.7512176472960137
+Agglomerative Clustering 14 n1, f1, f2, f4 50 cosine complete
+0.4159052234942423
+0.7675658496110581
+Agglomerative Clustering 15 n1, f1, f2, f4 50 cosine average
+0.5994955862991005
+0.7619487114806537
+Agglomerative Clustering 16 n1, f1, f2, f4 50 cosine single
+0.5325950672588824
+0.7621829737925501
+Agglomerative Clustering 18 n1, f1, f2, f4 50 manhattan complete
+0.5079259744418069
+0.7639357363233802
+Agglomerative Clustering 19 n1, f1, f2, f4 50 manhattan average
+0.63681121075451
+0.7593647558139336
+Agglomerative Clustering 20 n1, f1, f2, f4 50 manhattan single
+0.530987539490291
+0.7571760304741505
+Agglomerative Clustering 21 n1, f1, f2, f4 50 euclidean ward
+0.5326756892823563
+0.7639916412191304
+Agglomerative Clustering 22 n1, f1, f2, f4 50 euclidean complete
+0.5337214357323173
+0.7589544593065498
+Agglomerative Clustering 23 n1, f1, f2, f4 50 euclidean average
+0.6314501739058825
+0.758615739930277
+Agglomerative Clustering 24 n1, f1, f2, f4 50 euclidean single
+0.4557984993173853
+0.7532797047870474
+Agglomerative Clustering 26 n1, f1, f2, f4 100 cosine complete
+0.4324822044253142
+0.7740539543403341
+Agglomerative Clustering 27 n1, f1, f2, f4 100 cosine average
+0.55607619424231
+0.7685915243715112
+Agglomerative Clustering 28 n1, f1, f2, f4 100 cosine single
+0.33266295117625067
+0.7662238228240231
+Agglomerative Clustering 30 n1, f1, f2, f4 100 manhattan complete
+0.5181050508692902
+0.7679123303706177
+Agglomerative Clustering 31 n1, f1, f2, f4 100 manhattan average
+0.5771362337553165
+0.7666273297365607
+Agglomerative Clustering 32 n1, f1, f2, f4 100 manhattan single
+0.453971244260429
+0.7633990034822928
+Agglomerative Clustering 33 n1, f1, f2, f4 100 euclidean ward
+0.46800098045265975
+0.7825284860207008
+Agglomerative Clustering 34 n1, f1, f2, f4 100 euclidean complete
+0.5506047734245088
+0.7676176767986139
+Agglomerative Clustering 35 n1, f1, f2, f4 100 euclidean average
+0.6267846096696136
+0.7654346776464468
+Agglomerative Clustering 36 n1, f1, f2, f4 100 euclidean single
+0.42456332332836166
+0.7624488819870686
+Agglomerative Clustering 38 n1, f1, f2, f4 300 cosine complete
+0.35363506075759404
+0.7979955533653165
+Agglomerative Clustering 39 n1, f1, f2, f4 300 cosine average
+0.39792184798974184
+0.7928593178031766
+Agglomerative Clustering 40 n1, f1, f2, f4 300 cosine single
+-0.21341296022700795
+0.7763450921890745
+Agglomerative Clustering 42 n1, f1, f2, f4 300 manhattan complete
+0.4416082242604069
+0.7922022813245974
+Agglomerative Clustering 43 n1, f1, f2, f4 300 manhattan average
+0.4696024640005363
+0.7884004013719766
+Agglomerative Clustering 44 n1, f1, f2, f4 300 manhattan single
+-0.2224448070255869
+0.773172202740369
+Agglomerative Clustering 45 n1, f1, f2, f4 300 euclidean ward
+0.4223036370571892
+0.8005040942061611
+Agglomerative Clustering 46 n1, f1, f2, f4 300 euclidean complete
+0.4321989864684377
+0.7903499513376759
+Agglomerative Clustering 47 n1, f1, f2, f4 300 euclidean average
+0.48268831419569963
+0.7874049902747423
+Agglomerative Clustering 48 n1, f1, f2, f4 300 euclidean single
+-0.2267518291276238
+0.7729246938654272
