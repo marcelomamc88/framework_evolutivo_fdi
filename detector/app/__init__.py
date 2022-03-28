@@ -1,39 +1,82 @@
-import requests
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify
 from river import cluster
-from river import stream
-import asyncio
-from threading import Thread
+import pandas as pd
+import torch
+import numpy as np
+from torch import nn
+from pymongo import MongoClient
 
-# X = [[1, 0.5], [1, 0.625], [1, 0.75], [1, 1.125], [1, 1.5], [1, 1.75], [4, 1.5], [4, 2.25], [4, 2.5], [4, 3],[4, 3.25], [4, 3.5]]
+def start_database():
+    global detector_metadata
+
+    fdi_db = MongoClient('localhost', 27017).fdi
+    detector_metadata = fdi_db.detector_metadata
+
 
 app = Flask(__name__)
 app.config['CORS_HEADERS'] = 'Content-Type'
-clusterer = None
+detector_metadata = None
+net = None
+loss_function = nn.L1Loss()
+
+start_database()
+
+class Autoencoder(nn.Module):
+    def __init__(self, encode_l, decode_l):
+        super().__init__()
+        self.encoder = nn.Sequential(
+            nn.Linear(54, 32),
+            nn.ReLU(),
+            nn.Linear(32, 9),
+        )
+
+        self.decoder = nn.Sequential(
+            nn.Linear(9, 32),
+            nn.ReLU(),
+            nn.Linear(32, 54),
+            nn.Tanh()
+        )
+
+    def forward(self, x):
+        return self.decoder(self.encoder(x))
 
 
-def initialize_clusterer():
-    global clusterer
-    clusterer = dbstream = cluster.DBSTREAM(
-        clustering_threshold=2.3,
-        fading_factor=0.75,
-        cleanup_interval=1,
-        intersection_factor=0.1,
-        minimum_weight=3)
+def initialize():
+    global net
+
+    net = torch.load('autoencoder_model.pt')
 
     print('clusterer initialized - detector componenet')
 
+@app.route('/detector/predict', methods=['GET'])
+def detector_precict():
+    if (net == None):
+        initialize()
+
+    meta = list(detector_metadata.find({}))
+
+    content = request.get_json()
+    _x = pd.read_json(content['x'])
+    real = _x.to_numpy().reshape(1,-1).astype(np.float32)
+
+    regenerate = net(torch.from_numpy(real))
+    l = loss_function(regenerate, torch.from_numpy(real)).item()
+
+    if (l <= meta[0]['threshold']):
+        return jsonify({'y_hat': 0})
+    else:
+        return jsonify({'y_hat': 1}) #call classifier
 
 @app.route('/detector/learn', methods=['GET'])
 def clusterer_learn():
-    if (clusterer == None):
-        initialize_clusterer()
+    if (net == None):
+        initialize()
 
     content = request.get_json()
     _x = content['x']
 
     x = {k: v for i, (k, v) in enumerate(_x.items())}
-    dbstream = clusterer
+    dbstream = net
 
     dbstream.learn_one(x)
     dbstream._recluster()
@@ -48,6 +91,7 @@ def clusterer_learn():
     return jsonify({'x': x,
                     'y': y_pred,
                     'n_clusters': n_clusters})
+
 
 
 if __name__ == '__main__':
