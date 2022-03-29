@@ -1,140 +1,56 @@
-import requests
 from flask import Flask, request, jsonify, render_template
-from river import cluster, stream
-from river.utils import numpy2dict
 from pymongo import MongoClient
-import numpy as np
-from matplotlib import cm
-from matplotlib import pyplot as plt
-from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
-from matplotlib.figure import Figure
-from matplotlib.colors import ListedColormap, LinearSegmentedColormap
-from mpl_toolkits.mplot3d import Axes3D
+import pickle
 import pandas as pd
-from sklearn.preprocessing import LabelEncoder
-from river import linear_model, metrics, multiclass, preprocessing
-from river import ensemble
-from river import neighbors
-from river import tree
+import numpy as np
+
+def start_database():
+    global classifier_metadata
+
+    fdi_db = MongoClient('localhost', 27017).fdi
+    classifier_metadata = fdi_db.classifier_metadata
 
 
 app = Flask(__name__)
 app.config['CORS_HEADERS'] = 'Content-Type'
+classifier_metadata = None
+clf = None
+scaler = None
 
-model = None
+start_database()
 
+def initialize():
+    global scaler
+    global clf
 
-@app.route('/classifier/init', methods=['GET'])
-def endpoint_init():
-    #get type model
-    #builder model
-    r = request.get_json()
-    initialize(type_model= r['type_model'])
-    return jsonify({'msg': 'call init endpoint classifier... model: ' + str(model)})
-
-
-@app.route('/classifier/', methods=['GET'])
-def endpoint_info():
-    pass
+    scaler = pickle.load(open('scaler.pkl','rb'))
+    clf = pickle.load(open('classifier_model.pkl','rb'))
 
 
 @app.route('/classifier/predict', methods=['GET'])
 def endpoint_predict():
-    global model
+    if (clf == None):
+        initialize()
 
-    r = request.get_json()
+    meta = list(classifier_metadata.find({}))
 
-    if (r['type'] == 'proba'):
-        y_pred = model.predict_proba_one(r['x'])
-    else:
-        y_pred = model.predict_one(r['x'])
+    '''content = request.get_json()
+    x = pd.read_json(content['x']).to_numpy().reshape(1,-1)'''
 
+    '''pred = clf.predict_proba(x)
+    threshold = [0.9, 0.66, 0.75]
+    phi = threshold[0]
+    for n in pred:
+        if n[1] >= phi:
+            r = 1
+        elif n[2] >= phi:
+            r = 2
+        else:
+            r = -1'''
 
-    return jsonify({'y_pred': y_pred})
-
-
-@app.route('/classifier/learn', methods=['GET'])
-def endpoint_learn():
-
-    r = request.get_json()
-
-    learn(r['x'], int(r['y']))
-
-    return jsonify({'msg': 'x,y has been learned...'})
-
-
-def initialize(type_model = 1):
-    start_model(type_model)
-
-
-def start_model(type_model = 1):
-    global model
-
-    model = builder_model(type_model)
-
-
-def learn(x, y):
-    global model
-
-    model.predict_one(x) #needed ... ?!?
-    model = model.learn_one(x, y)
-
-
-def builder_model(type_model = 1):
-    if (type_model == 1):
-        model = builder_ovr_class_plus_lr()
-    elif (type_model == 2):
-        model = builder_ensemble_bagging()
-    elif (type_model == 3):
-        model = builder_knn()
-    elif (type_model == 4):
-        model = builder_knn_adwin()
-    elif (type_model == 5):
-        model = builder_hoeffding_adptive_tree()
-
-    return model
-
-
-def builder_ovr_class_plus_lr():
-    scaler = preprocessing.StandardScaler()
-    ovr = multiclass.OneVsRestClassifier(linear_model.LogisticRegression())
-    model = scaler | ovr
-    #metric = metrics.MacroF1()
-
-    return model
-
-def builder_ensemble_bagging():
-    return ensemble.BaggingClassifier(
-        model=(
-            preprocessing.StandardScaler() |
-            linear_model.LogisticRegression()
-        ),
-        n_models=3,
-        seed=42
-    )
-
-
-def builder_knn():
-    return ensemble.BaggingClassifier(
-        model=(
-            preprocessing.StandardScaler() |
-            neighbors.KNNClassifier()
-        )
-    )
-
-
-def builder_knn_adwin():
-    return ensemble.BaggingClassifier(
-        model=(
-            preprocessing.StandardScaler() |
-            neighbors.KNNADWINClassifier()
-        )
-    )
-
-def builder_hoeffding_adptive_tree():
-    return preprocessing.StandardScaler() | tree.HoeffdingAdaptiveTreeClassifier(seed=0)
+    return jsonify({'y_hat': 9}) #call classifier
 
 
 
 if __name__ == '__main__':
-    app.run(port=5001, debug=True)
+    app.run(port=5007, debug=True)
