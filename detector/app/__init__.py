@@ -6,6 +6,7 @@ import numpy as np
 from torch import nn
 from pymongo import MongoClient
 import json
+import pickle
 
 class Autoencoder(nn.Module):
     def __init__(self):
@@ -37,11 +38,12 @@ app = Flask(__name__)
 app.config['CORS_HEADERS'] = 'Content-Type'
 detector_metadata = None
 net = None
+scaler = None
 loss_function = nn.L1Loss()
 
 start_database()
 
-url = 'http://127.0.0.1:5007/classifier'
+url = 'http://127.0.0.1:5001/classifier'
 headers = {'Accept' : 'application/json', 'Content-Type' : 'application/json'}
 
 def send(endpoint, params_dict):
@@ -49,9 +51,12 @@ def send(endpoint, params_dict):
 
 def initialize():
     global net
+    global scaler
 
     net = Autoencoder()
     net.load_state_dict(torch.load('autoencoder_model.pt'))
+
+    scaler = pickle.load(open('scaler.pkl','rb'))
 
 
     print('clusterer initialized - detector componenet')
@@ -64,8 +69,9 @@ def detector_precict():
     meta = list(detector_metadata.find({}))
 
     content = request.get_json()
-    x = pd.read_json(content['x']).to_numpy().reshape(1,-1)
-    real = x.astype(np.float32)
+    x = pd.read_json(content['x'])
+    _x = scaler.transform(x).reshape(1,-1)
+    real = _x.astype(np.float32)
 
     regenerate = net(torch.from_numpy(real))
     l = loss_function(regenerate, torch.from_numpy(real)).item()
@@ -73,8 +79,9 @@ def detector_precict():
     if (l <= meta[0]['threshold']):
         return jsonify({'y_hat': 0})
     else:
-        #return jsonify({'y_hat': -1})
-        return jsonify({'y_hat': send('/predict', {'x': pd.DataFrame(x).T.to_json()})}) #call classifier
+        _x_ = x.to_numpy().reshape(-1)
+        r = send('/predict', {'x': pd.DataFrame(_x_).T.to_json()}) #call classifier
+        return jsonify({'y_hat': r['y_hat']})
 
 @app.route('/detector/learn', methods=['GET'])
 def clusterer_learn():
