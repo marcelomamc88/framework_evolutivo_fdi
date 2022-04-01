@@ -70,6 +70,7 @@ def detector_precict():
 
     content = request.get_json()
     x = pd.read_json(content['x'])
+    y = content['y']
     _x = scaler.transform(x).reshape(1,-1)
     real = _x.astype(np.float32)
 
@@ -80,7 +81,7 @@ def detector_precict():
         return jsonify({'y_hat': 0})
     else:
         _x_ = x.to_numpy().reshape(-1)
-        r = send('/predict', {'x': pd.DataFrame(_x_).T.to_json()}) #call classifier
+        r = send('/predict', {'x': pd.DataFrame(_x_).T.to_json(), 'y': y}) #call classifier
         return jsonify({'y_hat': r['y_hat']})
 
 @app.route('/detector/learn', methods=['GET'])
