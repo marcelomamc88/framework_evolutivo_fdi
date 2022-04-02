@@ -7,6 +7,7 @@ from pymongo import MongoClient
 from sklearn.cluster import  AgglomerativeClustering
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics.cluster import v_measure_score, silhouette_score
+from bson.objectid import ObjectId
 
 def start_database():
     global unknowns
@@ -30,12 +31,12 @@ def initialize():
     scaler = StandardScaler()
     clusterer = AgglomerativeClustering(n_clusters=300, affinity='euclidean', linkage='ward')
 
-    print('clusterer initialized - detector componenet')
+    print('clusterer has been initialized')
 
 start_database()
 
-@app.route('/detector/predict', methods=['GET'])
-def detector_precict():
+@app.route('/clusterer/group', methods=['GET'])
+def clusterer_group():
 
     initialize()
 
@@ -54,12 +55,14 @@ def detector_precict():
 
     pred = clusterer.fit_predict(scaler.fit_transform(sensors_df))
 
-    for p in pred:
+    for n, p in enumerate(pred):
+
         y_pred.append(p)
+        unknowns.update_one({'_id': ObjectId(str(data[n]['_id']))}, {'$set': {'cluster': int(p)}})
 
     silhouette = silhouette_score(scaler.transform(sensors_df), y_pred)
     homogeneity = v_measure_score(y, y_pred, beta=0) # 0 plus homogeneity | 2 completeness
-    a = 1
+
 
 if __name__ == '__main__':
     app.run(port=5002, debug=True, use_reloader=False)

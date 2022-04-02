@@ -12,15 +12,23 @@ clf = None
 scaler = None
 
 classifier_metadata = None
+classifier_knowledge = None
 unknown_collection = None
+threshold = None
 
 def start_database():
     global classifier_metadata
     global unknown_collection
+    global classifier_knowledge
+    global threshold
 
     fdi_db = MongoClient('localhost', 27017).fdi
     classifier_metadata = fdi_db.classifier_metadata
+    classifier_knowledge = fdi_db.classifier_knowledge
     unknown_collection = fdi_db.unknown
+
+    threshold = list(classifier_metadata.find({}))[0]['threshold']
+    a = 1
 
 def initialize():
     global scaler
@@ -31,9 +39,25 @@ def initialize():
 
 start_database()
 
+@app.route('/classifier/learn', methods=['GET'])
+def classifier_learn():
+    if (clf == None):
+        initialize()
+
+    content = request.get_json()
+    x = pd.read_json(content['x'])
+    y = np.array(content['y']).reshape(-1)
+
+    scaler.partial_fit(x)
+    _x = scaler.transform(x)
+    clf.partial_fit(_x, y)
+
+    return jsonify({'learn': 999})
+
 @app.route('/classifier/predict', methods=['GET'])
 def endpoint_predict():
     global unknown_collection
+    global threshold
 
     if (clf == None):
         initialize()
@@ -47,20 +71,22 @@ def endpoint_predict():
     _x = scaler.transform(x).reshape(1,-1)
 
     pred = clf.predict_proba(_x)
-    threshold = [0.9, 0.66, 0.75]
-    phi = threshold[0]
+    #threshold = [0.9, 0.66, 0.75]
+    phi = threshold
     for n in pred:
         if n[1] >= phi:
             r = 1
         elif len(n) > 2 and n[2] >= phi:
             r = 2
+        elif len(n) > 3 and n[3] >= phi:
+            r = 3
         else:
             r = 9
-            unknown_collection.insert_one({
+            '''unknown_collection.insert_one({
                      "timestamp": datetime.datetime.now(),
                      "sensors": x.loc[0].to_dict(),
                      "y": y
-                 })
+                 })'''
 
     return jsonify({'y_hat': r}) #call classifier
 
